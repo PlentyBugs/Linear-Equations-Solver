@@ -67,8 +67,6 @@ public class Main {
         }
         sc.close();
 
-        matrix.getRows().forEach(System.out::println);
-
         Complex[] output =  LinearEquation.solve(matrix);
 
         FileWriter writer = new FileWriter(new File(fileOutput));
@@ -81,7 +79,5 @@ public class Main {
         }
         writer.flush();
         writer.close();
-        System.out.println();
-        matrix.getRows().forEach(System.out::println);
     }
 }

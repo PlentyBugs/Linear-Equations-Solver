@@ -10,7 +10,6 @@ public class LinearEquation {
         rowReduce(matrix);
         new CommandNormalize(matrix).execute();
         new CommandClear(matrix).execute();
-        matrix.getRows().forEach(System.out::println);
         if (!checkOnCorrectness(matrix) || !checkOnInfinity(matrix)) {
             return null;
         }
@@ -32,29 +31,21 @@ public class LinearEquation {
 
     public static void rowReduce(Matrix matrix) {
         List<Row> rows = matrix.getRows();
-        int count = 0;
         if (rows.size() > 0 && rows.get(0).size() > 0) {
             for (int i = 0; i < rows.size() - 1; i++) {
                 for (int j = i + 1; j < rows.size(); j++) {
                     new CommandNormalize(matrix).execute();
-                    System.out.println("\n\nNormalization: ");
-                    matrix.getRows().forEach(System.out::println);
                     Row rowA = rows.get(i);
                     Row rowB = rows.get(j);
                     Complex firstA = rowA.get(i);
                     Complex firstB = rowB.get(i);
                     if (!firstA.isZero() && !firstB.isZero()) {
-                        count += 1;
-                        System.out.println("\nMultiply and subtract === " + firstA + " === " + firstB + " === " + i + " === " + j);
                         new CommandMultiplyByValue(rowB, new Complex(firstA).divide(firstB)).execute();
                         new CommandSubtract(rowB, rowA).execute();
-                        matrix.getRows().forEach(System.out::println);
                     }
                 }
             }
         }
-        System.out.println(count);
-        System.out.println(Main.commandHistory.size());
     }
 
     public static boolean checkOnCorrectness(Matrix matrix) {
